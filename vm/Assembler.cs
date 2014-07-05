@@ -82,8 +82,9 @@ namespace vm
                 if (entireLine.Contains(';'))
                 {
                     line = entireLine.Substring(0, entireLine.IndexOf(";"));
+                    line = line.Replace("\t", "");
 
-                    lineArray = line.Split(' ');
+                    lineArray = line.Split(new string[]{" "}, StringSplitOptions.RemoveEmptyEntries);
                     if (!functions.Contains(lineArray[i].ToUpper()) && !functions.Contains(lineArray[i + 1].ToUpper()))
                     {
                         //If not ARR
@@ -121,9 +122,10 @@ namespace vm
                 if (entireLine.Contains(';'))
                 {
                     line = entireLine.Substring(0, entireLine.IndexOf(";"));
+                    line = line.Replace("\t", "");
 
                     i = 0;
-                    lineArray = line.Split(' ');
+                    lineArray = line.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
                     if (functions.Contains(lineArray[i].ToUpper()) || functions.Contains(lineArray[i + 1].ToUpper()))
                     {
                         //If Labeled instruction
@@ -566,14 +568,16 @@ namespace vm
         {
             if (register.Equals("PC"))
                 return 10;
-            else if (register.Equals("FP"))
+            else if (register.Equals("FP") || register.Equals("(FP)"))
                 return 11;
-            else if (register.Equals("SP"))
+            else if (register.Equals("SP") || register.Equals("(SP)"))
                 return 12;
-            else if (register.Equals("SB"))
+            else if (register.Equals("SB") || register.Equals("(SB)"))
                 return 13;
-            else if (register.Equals("SL"))
+            else if (register.Equals("SL") || register.Equals("(SL)"))
                 return 14;
+            else if (register.Equals("HP") || register.Equals("(HP)"))
+                return 15;
             else
             {
                 string reg = register.Substring(1, register.Length - 1);
